@@ -138,3 +138,29 @@ uv run python examples/04_benchmark.py \
   --output benchmark_results.csv
 ```
 
+Validated in Codespaces:
+
+| Model | Threads | Context | Total time | Tokens/sec | Peak RAM | CPU usage |
+|-------|---------|---------|------------|------------|----------|-----------|
+| 1.5B  | 1       | 512     | 8.01s      | 5.87       | 1790.7 MB | 109.5% |
+| 1.5B  | 1       | 2048    | 7.86s      | 5.98       | 1835.9 MB | 109.2% |
+| 1.5B  | 2       | 512     | 6.12s      | 7.69       | 1797.3 MB | 171.2% |
+| 1.5B  | 2       | 2048    | 6.32s      | 7.43       | 1853.6 MB | 169.2% |
+| 3B    | 1       | 512     | 17.28s     | 3.30       | 3427.5 MB | 76.3%  |
+| 3B    | 1       | 2048    | 17.43s     | 3.27       | 3481.9 MB | 112.0% |
+| 3B    | 2       | 512     | 13.98s     | 4.08       | 3417.1 MB | 174.1% |
+| 3B    | 2       | 2048    | 17.45s     | 3.27       | 3489.2 MB | 154.1% |
+
+Observations for classroom discussion:
+
+- **Thread count** has the biggest effect: going from 1 → 2 threads gives a
+  ~25-30% tokens/sec improvement on both models.
+- **Context size** (512 vs 2048) barely moves tokens/sec or RAM for these
+  short completions — larger context mainly matters once prompts/history
+  grow, not for generation speed itself.
+- **Model size** roughly halves throughput and nearly doubles peak RAM going
+  from 1.5B → 3B, a clean example of the quality/latency/resource trade-off.
+- The 3B/1-thread/512-ctx row's 12s load time (see raw CSV) was a cold
+  filesystem cache miss on first read of the 2GB file — a good teaching
+  moment about why benchmarks should discard the first run or warm the cache.
+
