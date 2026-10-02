@@ -42,6 +42,8 @@ uv run python examples/01_local_inference.py --model-path <path-to-gguf>
 
 ## Phase 1 validation metrics
 
+Fallback model (Qwen2.5-1.5B-Instruct Q4_K_M, ~1 GB), validated in Codespaces:
+
 | Metric              | Value |
 |----------------------|-------|
 | Model size           | ~1 GB (Q4_K_M) |
@@ -51,6 +53,23 @@ uv run python examples/01_local_inference.py --model-path <path-to-gguf>
 | First-token latency  | 1.93s |
 | Total latency        | 6.39s |
 | Tokens/sec           | 7.36  |
+
+Preferred model (Qwen2.5-3B-Instruct Q4_K_M, ~2 GB), validated locally
+(Windows, 2 threads):
+
+| Metric              | Value |
+|----------------------|-------|
+| Model size           | ~2 GB (Q4_K_M) |
+| RAM usage            | 3292.2 MB (peak) |
+| CPU usage            | 245.1% (n_threads=2) |
+| Load time            | 1.83s |
+| First-token latency  | 0.68s |
+| Total latency        | 5.78s |
+| Tokens/sec           | 7.96  |
+
+The 3B model roughly doubles RAM usage (~1.8 GB → ~3.3 GB peak) but fits
+comfortably within the default Codespaces machine type (2-core/8GB), with
+room to spare for a classroom setting.
 
 ## Phase 2: OpenAI-compatible API serving
 
