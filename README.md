@@ -121,3 +121,11 @@ Validated in Codespaces (same 1.5B Q4_K_M model):
 | Total time   | 7.21s |
 | Tokens       | 48    |
 | Tokens/sec   | 6.65  |
+
+## Phase 3: Benchmarking exercise
+
+See [examples/05_benchmark.md](examples/05_benchmark.md) to run
+[examples/04_benchmark.py](examples/04_benchmark.py), which sweeps thread
+counts, context sizes, and model files and writes the results to a CSV for
+classroom discussion.
+

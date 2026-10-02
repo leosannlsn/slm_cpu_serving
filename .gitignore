@@ -11,3 +11,7 @@ wheels/
 
 # Downloaded model weights
 models/
+
+# Benchmark output
+benchmark_results.csv
+*.csv
