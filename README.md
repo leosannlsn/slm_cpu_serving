@@ -2,10 +2,11 @@
 
 **Beyond ChatGPT: Real-Time AI Inference on Your Laptop**
 
-This repo is currently in **Phase 1: Codespaces Validation** — the goal is to
-prove that GitHub Codespaces is a viable, low-friction environment for running
-quantized small language models (SLMs) on CPU with
-[llama-cpp-python](https://github.com/abetlen/llama-cpp-python).
+This repo validates that GitHub Codespaces is a viable, low-friction
+environment for running quantized small language models (SLMs) on CPU with
+[llama-cpp-python](https://github.com/abetlen/llama-cpp-python), both for
+direct local inference (**Phase 1**) and for OpenAI-compatible API serving
+(**Phase 2**).
 
 Dependencies are managed with [uv](https://docs.astral.sh/uv/) via
 `pyproject.toml` / `uv.lock` — no `requirements.txt`.
@@ -39,9 +40,7 @@ uv sync
 uv run python examples/01_local_inference.py --model-path <path-to-gguf>
 ```
 
-## Validation metrics
-
-Fill in after running in Codespaces:
+## Phase 1 validation metrics
 
 | Metric              | Value |
 |----------------------|-------|
@@ -52,3 +51,18 @@ Fill in after running in Codespaces:
 | First-token latency  | 1.93s |
 | Total latency        | 6.39s |
 | Tokens/sec           | 7.36  |
+
+## Phase 2: OpenAI-compatible API serving
+
+See [examples/02_start_server.md](examples/02_start_server.md) to start a
+local OpenAI-compatible server (`llama_cpp.server`), then run
+[examples/03_api_client.py](examples/03_api_client.py) against it using the
+`openai` SDK.
+
+Validated locally (Windows, 2 threads, same 1.5B Q4_K_M model):
+
+| Metric       | Value |
+|--------------|-------|
+| Total time   | 2.78s |
+| Tokens       | 30    |
+| Tokens/sec   | 10.80 |
