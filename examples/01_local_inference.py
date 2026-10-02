@@ -68,7 +68,9 @@ def main() -> None:
         sys.exit(1)
 
     process = psutil.Process(os.getpid())
-    process.cpu_percent(interval=None)  # prime the counter; first call always returns 0.0
+    process.cpu_percent(
+        interval=None
+    )  # prime the counter; first call always returns 0.0
 
     mem_sampler = PeakMemorySampler(process)
     mem_sampler.start()
@@ -118,10 +120,9 @@ def main() -> None:
         print(f"Tokens/sec:          {completion_tokens / infer_elapsed:.2f}")
     else:
         print("Tokens/sec:          unavailable (no tokens generated)")
-    print(f"Peak RAM:            {mem_sampler.peak_rss / (1024 ** 2):.1f} MB")
+    print(f"Peak RAM:            {mem_sampler.peak_rss / (1024**2):.1f} MB")
     print(f"CPU usage:           {cpu_percent:.1f}% (n_threads={args.n_threads})")
 
 
 if __name__ == "__main__":
     main()
-

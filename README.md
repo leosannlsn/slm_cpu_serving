@@ -45,10 +45,10 @@ Fill in after running in Codespaces:
 
 | Metric              | Value |
 |----------------------|-------|
-| Model size           |       |
+| Model size           | ~1 GB (Q4_K_M) |
 | RAM usage            |       |
 | CPU usage            |       |
-| Load time            |       |
+| Load time            | 7.43s |
 | First-token latency  |       |
-| Total latency        |       |
-| Tokens/sec           |       |
+| Total latency        | 6.09s |
+| Tokens/sec           | 7.72  |
