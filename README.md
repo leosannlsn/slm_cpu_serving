@@ -66,3 +66,11 @@ Validated locally (Windows, 2 threads, same 1.5B Q4_K_M model):
 | Total time   | 2.78s |
 | Tokens       | 30    |
 | Tokens/sec   | 10.80 |
+
+Validated in Codespaces (same 1.5B Q4_K_M model):
+
+| Metric       | Value |
+|--------------|-------|
+| Total time   | 7.21s |
+| Tokens       | 48    |
+| Tokens/sec   | 6.65  |
