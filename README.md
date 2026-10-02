@@ -83,6 +83,18 @@ Preferred model (Qwen2.5-3B-Instruct Q4_K_M, ~2 GB), validated locally
 | Total latency        | 5.78s |
 | Tokens/sec           | 7.96  |
 
+Preferred model (Qwen2.5-3B-Instruct Q4_K_M, ~2 GB), validated in Codespaces
+(2 threads):
+
+| Metric              | Value |
+|----------------------|-------|
+| Model size           | ~2 GB (Q4_K_M) |
+| RAM usage            | 3464.2 MB (peak) |
+| CPU usage            | 99.1% (n_threads=2) |
+| First-token latency  | 2.90s |
+| Total latency        | 13.71s |
+| Tokens/sec           | 4.16  |
+
 The 3B model roughly doubles RAM usage (~1.8 GB → ~3.3 GB peak) but fits
 comfortably within the default Codespaces machine type (2-core/8GB), with
 room to spare for a classroom setting.
