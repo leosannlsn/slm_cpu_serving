@@ -9,7 +9,7 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "openai>=1.50",
-    "llama-cpp-python>=0.3.2",
+    "llama-cpp-python>=0.3.21",
     "psutil>=6.0",
     "jupyter>=1.1",
 ]
@@ -20,3 +20,12 @@ slm-cpu-serving = "slm_cpu_serving:main"
 [build-system]
 requires = ["uv_build>=0.12.21,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv.sources]
+# prebuilt CPU wheels (py3-none) avoid compiling llama.cpp from source
+llama-cpp-python = { index = "llama-cpp-python-cpu" }
+
+[[tool.uv.index]]
+name = "llama-cpp-python-cpu"
+url = "https://abetlen.github.io/llama-cpp-python/whl/cpu"
+explicit = true
