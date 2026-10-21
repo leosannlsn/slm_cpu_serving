@@ -1,30 +1,54 @@
-# Phase 3: Benchmarking exercise
+# Fase 3: ejercicio de benchmarking
 
-[examples/04_benchmark.py](04_benchmark.py) sweeps combinations of thread
-counts, context sizes, and model files, writing one CSV row per combination.
-Students can discuss trade-offs by sweeping:
+[examples/04_benchmark.py](04_benchmark.py) recorre combinaciones de cantidad
+de hilos, máximo de tokens de salida y archivos de modelo, y escribe una fila
+de CSV por cada combinación. Los estudiantes pueden analizar los compromisos
+(*trade-offs*) variando:
 
-- **Thread counts** — `--n-threads`
-- **Context sizes** — `--n-ctx`
-- **Quantization levels / model sizes** — pass multiple `--model-path` values
-  (e.g. a Q4_K_M and a Q5_K_M/Q8_0 GGUF, or the 1.5B and 3B models)
+- **Cantidad de hilos** — `--n-threads`
+- **Máximo de tokens de salida** — `--max-tokens` (p. ej. `--max-tokens 16 64`
+  para ver cómo crece el tiempo total con la longitud de la respuesta)
+- **Niveles de cuantización / tamaños de modelo** — pasa varios valores en
+  `--model-path` (p. ej. un GGUF Q4_K_M y uno Q5_K_M/Q8_0, o los modelos de
+  1.5B y 3B)
 
-## Run a sweep
+## Ejecutar un barrido
 
 ```bash
-uv run python examples/04_benchmark.py \
-  --model-path models/qwen2.5-1.5b-instruct-q4_k_m.gguf models/qwen2.5-3b-instruct-q4_k_m.gguf \
-  --n-threads 1 2 4 \
-  --n-ctx 512 2048 \
-  --max-tokens 64 \
-  --output benchmark_results.csv
+uv run python examples/04_benchmark.py --model-path models/qwen2.5-1.5b-instruct-q4_k_m.gguf models/qwen2.5-3b-instruct-q4_k_m.gguf --n-threads 1 2 --max-tokens 16 64 --output benchmark_results.csv
 ```
 
-Each combination runs once by default; use `--repeats 3` to average out
-noise before discussing results as a class.
+Cada combinación se ejecuta una vez por defecto; usa `--repeats 3` para
+promediar el ruido antes de discutir los resultados en clase.
 
-## Output
+## Salida
 
-A CSV with columns: `model, n_threads, n_ctx, load_time_s,
+Un CSV con las columnas: `model, n_threads, n_ctx, max_tokens, load_time_s,
 first_token_latency_s, total_time_s, tokens, tokens_per_sec, peak_ram_mb,
-cpu_percent` — easy to open in a spreadsheet or plot during the workshop.
+cpu_percent`, fácil de abrir en una hoja de cálculo o graficar durante el
+taller.
+
+| Columna | Significado |
+|---------|-------------|
+| `model` | Archivo GGUF usado |
+| `n_threads` | Hilos de CPU |
+| `n_ctx` | Tamaño de la ventana de contexto (2048 en este ejercicio) |
+| `max_tokens` | Máximo de tokens que se permitió generar |
+| `load_time_s` | Tiempo de carga del modelo (s) |
+| `first_token_latency_s` | Latencia hasta el primer token (s) |
+| `total_time_s` | Tiempo total de generación (s) |
+| `tokens` | Tokens generados |
+| `tokens_per_sec` | Throughput (tokens/s) |
+| `peak_ram_mb` | Pico de memoria RAM (MB) |
+| `cpu_percent` | Uso de CPU (100% = un núcleo) |
+
+## Preguntas para discutir
+
+- ¿Duplicar los hilos duplica los tokens/s? ¿Por qué sí o por qué no?
+- ¿Qué cambia más con el tamaño del modelo: la latencia o la RAM?
+- Si limitas `--max-tokens`, ¿qué cambia: el tiempo total, la latencia del
+  primer token o los tokens/s?
+- ¿Por qué la primera ejecución puede tardar más en cargar el modelo que las
+  siguientes? ¿Qué implica eso al medir rendimiento?
+- Si tuvieras que responder en menos de 3 segundos, ¿qué configuración
+  elegirías?
